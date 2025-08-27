@@ -1,11 +1,11 @@
-"use client"
+'use client';
 
-import { useTasks } from "@/hooks/useTasks"
-import { useTaskFilters } from "@/hooks/useTaskFilters"
-import { TaskForm } from "@/components/TaskForm"
-import { TaskList } from "@/components/TaskList"
-import { TaskStats } from "@/components/TaskStats"
-import { ListTodo } from "lucide-react"
+import { useTasks } from '@/hooks/useTasks';
+import { useTaskFilters } from '@/hooks/useTaskFilters';
+import { TaskForm } from '@/components/TaskForm';
+import { TaskList } from '@/components/TaskList';
+import { TaskStats } from '@/components/TaskStats';
+import { ListTodo } from 'lucide-react';
 
 export default function Home() {
   const {
@@ -13,17 +13,14 @@ export default function Home() {
     loading,
     error,
     addTask,
+    editTask,
     toggleTask,
     deleteTask,
     clearCompleted,
-  } = useTasks()
+  } = useTasks();
 
-  const {
-    filters,
-    filteredTasks,
-    taskStats,
-    updateFilters,
-  } = useTaskFilters(tasks)
+  const { filters, filteredTasks, taskStats, updateFilters } =
+    useTaskFilters(tasks);
 
   return (
     <div className="min-h-screen bg-background">
@@ -40,18 +37,20 @@ export default function Home() {
 
         {error && (
           <div className="mb-6 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
-            <p className="text-destructive text-sm font-medium">Error: {error}</p>
+            <p className="text-destructive text-sm font-medium">
+              Error: {error}
+            </p>
           </div>
         )}
 
         <div className="grid gap-8">
           <TaskStats stats={taskStats} />
-          
+
           <div className="grid lg:grid-cols-3 gap-8">
             <div className="lg:col-span-1">
               <TaskForm onSubmit={addTask} disabled={loading} />
             </div>
-            
+
             <div className="lg:col-span-2">
               <TaskList
                 tasks={filteredTasks}
@@ -59,6 +58,7 @@ export default function Home() {
                 onFiltersChange={updateFilters}
                 onToggleTask={toggleTask}
                 onDeleteTask={deleteTask}
+                onEditTask={editTask}
                 onClearCompleted={clearCompleted}
                 loading={loading}
               />
@@ -67,5 +67,5 @@ export default function Home() {
         </div>
       </div>
     </div>
-  )
+  );
 }

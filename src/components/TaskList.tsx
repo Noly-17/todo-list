@@ -1,25 +1,26 @@
-import { Task, TaskFilters } from "@/types/task"
-import { TaskItem } from "./TaskItem"
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
+import { Task, TaskFilters } from '@/types/task';
+import { TaskItem } from './TaskItem';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Filter, SortAsc, SortDesc, ListTodo, Trash2 } from "lucide-react"
+} from '@/components/ui/select';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Filter, SortAsc, SortDesc, ListTodo, Trash2 } from 'lucide-react';
 
 interface TaskListProps {
-  tasks: Task[]
-  filters: TaskFilters
-  onFiltersChange: (filters: Partial<TaskFilters>) => void
-  onToggleTask: (id: string) => Promise<void>
-  onDeleteTask: (id: string) => Promise<void>
-  onClearCompleted: () => Promise<void>
-  loading?: boolean
+  tasks: Task[];
+  filters: TaskFilters;
+  onFiltersChange: (filters: Partial<TaskFilters>) => void;
+  onToggleTask: (id: string) => Promise<void>;
+  onDeleteTask: (id: string) => Promise<void>;
+  onEditTask: (id: string, title: string) => Promise<void>;
+  onClearCompleted: () => Promise<void>;
+  loading?: boolean;
 }
 
 export function TaskList({
@@ -28,10 +29,11 @@ export function TaskList({
   onFiltersChange,
   onToggleTask,
   onDeleteTask,
+  onEditTask,
   onClearCompleted,
   loading = false,
 }: TaskListProps) {
-  const completedCount = tasks.filter(task => task.completed).length
+  const completedCount = tasks.filter((task) => task.completed).length;
 
   if (loading) {
     return (
@@ -42,7 +44,7 @@ export function TaskList({
           </div>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   return (
@@ -59,8 +61,10 @@ export function TaskList({
             <div className="space-y-2">
               <Label htmlFor="status-filter">Status</Label>
               <Select
-                value={filters.status || "all"}
-                onValueChange={(value) => onFiltersChange({ status: value as TaskFilters["status"] })}
+                value={filters.status || 'all'}
+                onValueChange={(value) =>
+                  onFiltersChange({ status: value as TaskFilters['status'] })
+                }
               >
                 <SelectTrigger id="status-filter">
                   <SelectValue />
@@ -76,8 +80,12 @@ export function TaskList({
             <div className="space-y-2">
               <Label htmlFor="priority-filter">Priority</Label>
               <Select
-                value={filters.priority || "all"}
-                onValueChange={(value) => onFiltersChange({ priority: value as TaskFilters["priority"] })}
+                value={filters.priority || 'all'}
+                onValueChange={(value) =>
+                  onFiltersChange({
+                    priority: value as TaskFilters['priority'],
+                  })
+                }
               >
                 <SelectTrigger id="priority-filter">
                   <SelectValue />
@@ -94,8 +102,10 @@ export function TaskList({
             <div className="space-y-2">
               <Label htmlFor="sort-filter">Sort By</Label>
               <Select
-                value={filters.sortBy || "createdAt"}
-                onValueChange={(value) => onFiltersChange({ sortBy: value as TaskFilters["sortBy"] })}
+                value={filters.sortBy || 'createdAt'}
+                onValueChange={(value) =>
+                  onFiltersChange({ sortBy: value as TaskFilters['sortBy'] })
+                }
               >
                 <SelectTrigger id="sort-filter">
                   <SelectValue />
@@ -111,8 +121,12 @@ export function TaskList({
             <div className="space-y-2">
               <Label htmlFor="order-filter">Order</Label>
               <Select
-                value={filters.sortOrder || "desc"}
-                onValueChange={(value) => onFiltersChange({ sortOrder: value as TaskFilters["sortOrder"] })}
+                value={filters.sortOrder || 'desc'}
+                onValueChange={(value) =>
+                  onFiltersChange({
+                    sortOrder: value as TaskFilters['sortOrder'],
+                  })
+                }
               >
                 <SelectTrigger id="order-filter">
                   <SelectValue />
@@ -143,7 +157,8 @@ export function TaskList({
                 className="flex items-center gap-2"
               >
                 <Trash2 className="h-4 w-4" />
-                Clear {completedCount} Completed Task{completedCount !== 1 ? 's' : ''}
+                Clear {completedCount} Completed Task
+                {completedCount !== 1 ? 's' : ''}
               </Button>
             </div>
           )}
@@ -158,9 +173,9 @@ export function TaskList({
                 <ListTodo className="h-12 w-12 mx-auto mb-4 opacity-50" />
                 <p className="text-lg font-medium mb-2">No tasks found</p>
                 <p className="text-sm">
-                  {filters.status === "all" 
-                    ? "Add your first task to get started!"
-                    : "No tasks match your current filters."}
+                  {filters.status === 'all'
+                    ? 'Add your first task to get started!'
+                    : 'No tasks match your current filters.'}
                 </p>
               </div>
             </CardContent>
@@ -172,10 +187,11 @@ export function TaskList({
               task={task}
               onToggle={onToggleTask}
               onDelete={onDeleteTask}
+              onEdit={onEditTask}
             />
           ))
         )}
       </div>
     </div>
-  )
+  );
 }

@@ -49,6 +49,10 @@ export function useTasks() {
     }
   }, []);
 
+  const editTask = useCallback(async (id: string, title: string) => {
+    await updateTask(id, { title });
+  }, []);
+
   const deleteTask = useCallback(async (id: string) => {
     try {
       setError(null);
@@ -96,6 +100,7 @@ export function useTasks() {
     error,
     addTask,
     updateTask,
+    editTask,
     deleteTask,
     toggleTask,
     clearCompleted,

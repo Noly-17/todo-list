@@ -1,5 +1,5 @@
-import { TaskStats as TaskStatsType } from "@/types/task"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { TaskStats as TaskStatsType } from '@/types/task';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   CheckCircle,
   Clock,
@@ -7,14 +7,15 @@ import {
   AlertCircle,
   Circle,
   Target,
-} from "lucide-react"
+} from 'lucide-react';
 
 interface TaskStatsProps {
-  stats: TaskStatsType
+  stats: TaskStatsType;
 }
 
 export function TaskStats({ stats }: TaskStatsProps) {
-  const completionRate = stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0
+  const completionRate =
+    stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -35,7 +36,9 @@ export function TaskStats({ stats }: TaskStatsProps) {
           <CheckCircle className="h-4 w-4 text-green-600" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold text-green-600">{stats.completed}</div>
+          <div className="text-2xl font-bold text-green-600">
+            {stats.completed}
+          </div>
           <p className="text-xs text-muted-foreground">
             {completionRate}% completion rate
           </p>
@@ -48,7 +51,9 @@ export function TaskStats({ stats }: TaskStatsProps) {
           <Clock className="h-4 w-4 text-orange-600" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold text-orange-600">{stats.pending}</div>
+          <div className="text-2xl font-bold text-orange-600">
+            {stats.pending}
+          </div>
           <p className="text-xs text-muted-foreground">Tasks to complete</p>
         </CardContent>
       </Card>
@@ -59,7 +64,9 @@ export function TaskStats({ stats }: TaskStatsProps) {
           <Target className="h-4 w-4 text-blue-600" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold text-blue-600">{completionRate}%</div>
+          <div className="text-2xl font-bold text-blue-600">
+            {completionRate}%
+          </div>
           <div className="mt-2">
             <div className="w-full bg-gray-200 rounded-full h-2">
               <div
@@ -73,7 +80,9 @@ export function TaskStats({ stats }: TaskStatsProps) {
 
       <Card className="md:col-span-2 lg:col-span-4">
         <CardHeader>
-          <CardTitle className="text-sm font-medium">Priority Breakdown</CardTitle>
+          <CardTitle className="text-sm font-medium">
+            Priority Breakdown
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-3 gap-4">
@@ -108,5 +117,5 @@ export function TaskStats({ stats }: TaskStatsProps) {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
